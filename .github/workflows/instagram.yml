@@ -1,0 +1,59 @@
+name: Flux Instagram Comoprint
+
+on:
+  schedule:
+    # Tous les jours à 4h17 UTC (5h17 ou 6h17 heure de Paris)
+    - cron: "17 4 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: instagram-feed
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Installer les dépendances
+        run: pip install --quiet Pillow
+
+      - name: Récupérer les publications Instagram
+        env:
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          BEHOLD_FEED_URL: ${{ secrets.BEHOLD_FEED_URL }}
+          IG_COUNT: "6"
+        # Si le secret BEHOLD_FEED_URL existe, la source Behold est utilisée ;
+        # sinon, l'API Instagram directe (secret IG_TOKEN).
+        run: |
+          if [ -n "$BEHOLD_FEED_URL" ]; then
+            python scripts/fetch_behold.py
+          else
+            python scripts/fetch_instagram.py
+          fi
+
+      - name: Mettre à jour le jeton dans les secrets GitHub
+        if: hashFiles('.new_token') != ''
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          gh secret set IG_TOKEN --repo "$GITHUB_REPOSITORY" < .new_token
+          rm -f .new_token
+
+      - name: Publier le flux
+        run: |
+          rm -f .new_token
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs
+          git commit -m "Flux Instagram du $(date -u +%Y-%m-%d)" || echo "Aucun changement"
+          git push
