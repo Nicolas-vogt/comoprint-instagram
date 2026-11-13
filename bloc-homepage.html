@@ -1,0 +1,103 @@
+<!-- ============================================================
+     Carrousel Instagram Comoprint : bloc à coller dans le back office
+     Seule ligne à modifier : FEED_URL (adresse GitHub Pages du flux)
+     ============================================================ -->
+<section class="cp-ig" id="cp-ig" hidden aria-labelledby="cp-ig-title">
+  <div class="cp-ig__head">
+    <h2 class="cp-ig__title" id="cp-ig-title">Nos dernières réalisations sur Instagram</h2>
+    <a class="cp-ig__follow" id="cp-ig-follow" href="https://www.instagram.com/" target="_blank" rel="noopener">Suivre <span id="cp-ig-user"></span></a>
+  </div>
+  <div class="cp-ig__wrap">
+    <button class="cp-ig__nav cp-ig__nav--prev" type="button" aria-label="Publications précédentes">&#8249;</button>
+    <ul class="cp-ig__track" id="cp-ig-track"></ul>
+    <button class="cp-ig__nav cp-ig__nav--next" type="button" aria-label="Publications suivantes">&#8250;</button>
+  </div>
+</section>
+
+<style>
+.cp-ig{--cp-navy:#050660;--cp-pink:#f40f5c;max-width:1200px;margin:48px auto;padding:0 16px;font-family:inherit;box-sizing:border-box}
+.cp-ig *{box-sizing:border-box}
+.cp-ig__head{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+.cp-ig__title{margin:0;color:var(--cp-navy);font-size:24px;line-height:1.25}
+.cp-ig__follow{display:inline-block;background-color:var(--cp-pink);color:#fff!important;font-weight:700;font-size:14px;padding:10px 18px;border-radius:999px;text-decoration:none;white-space:nowrap}
+.cp-ig__follow:hover{opacity:.9}
+.cp-ig__wrap{position:relative}
+.cp-ig__track{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 3*16px)/4);gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;list-style:none;margin:0;padding:0 0 4px;scrollbar-width:none}
+.cp-ig__track::-webkit-scrollbar{display:none}
+.cp-ig__item{scroll-snap-align:start}
+.cp-ig__link{position:relative;display:block;aspect-ratio:1/1;border-radius:12px;overflow:hidden;background-color:#f2f3f7}
+.cp-ig__link img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s ease}
+.cp-ig__cap{position:absolute;inset:auto 0 0 0;padding:28px 12px 12px;color:#fff;font-size:13px;line-height:1.4;background-image:linear-gradient(transparent,rgba(5,6,96,.85));opacity:0;transition:opacity .25s ease}
+.cp-ig__link:hover img,.cp-ig__link:focus-visible img{transform:scale(1.04)}
+.cp-ig__link:hover .cp-ig__cap,.cp-ig__link:focus-visible .cp-ig__cap{opacity:1}
+.cp-ig__nav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:44px;height:44px;border-radius:50%;border:0;background-color:#fff;color:var(--cp-navy);font-size:30px;line-height:40px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.18)}
+.cp-ig__nav--prev{left:-12px}.cp-ig__nav--next{right:-12px}
+.cp-ig__nav[disabled]{opacity:0;pointer-events:none}
+@media (max-width:900px){.cp-ig__track{grid-auto-columns:calc((100% - 2*12px)/2.6);gap:12px}}
+@media (max-width:560px){.cp-ig__track{grid-auto-columns:72%}.cp-ig__nav{display:none}.cp-ig__title{font-size:20px}}
+@media (hover:none){.cp-ig__cap{opacity:1}}
+</style>
+
+<script>
+(function () {
+  var FEED_URL = "https://VOTRE-COMPTE.github.io/comoprint-instagram/feed.json";
+
+  var root = document.getElementById("cp-ig");
+  if (!root || !window.fetch) return;
+  var base = FEED_URL.replace(/feed\.json.*$/, "");
+  var track = document.getElementById("cp-ig-track");
+  var prev = root.querySelector(".cp-ig__nav--prev");
+  var next = root.querySelector(".cp-ig__nav--next");
+
+  function esc(s) {
+    return String(s || "").replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function track_click(label) {
+    if (typeof window.gtag === "function") {
+      window.gtag("event", "instagram_click", { link_text: label, section: "homepage_instagram" });
+    }
+  }
+
+  function updateNav() {
+    var max = track.scrollWidth - track.clientWidth - 2;
+    prev.disabled = track.scrollLeft <= 2;
+    next.disabled = track.scrollLeft >= max;
+  }
+
+  function step(dir) {
+    track.scrollBy({ left: dir * track.clientWidth * 0.9, behavior: "smooth" });
+  }
+
+  fetch(FEED_URL, { cache: "no-cache" })
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function (feed) {
+      var items = (feed && feed.items) || [];
+      if (!items.length) return;
+      track.innerHTML = items.map(function (it) {
+        var alt = it.caption ? esc(it.caption) : "Publication Instagram Comoprint";
+        return '<li class="cp-ig__item"><a class="cp-ig__link" href="' + esc(it.permalink) +
+          '" target="_blank" rel="noopener" data-cp-ig="post">' +
+          '<img src="' + esc(base + it.image) + '" alt="' + alt + '" width="640" height="640" loading="lazy" decoding="async">' +
+          (it.caption ? '<span class="cp-ig__cap">' + esc(it.caption) + "</span>" : "") +
+          "</a></li>";
+      }).join("");
+      if (feed.profile_url) document.getElementById("cp-ig-follow").href = feed.profile_url;
+      if (feed.username) document.getElementById("cp-ig-user").textContent = "@" + feed.username;
+      root.hidden = false;
+      updateNav();
+    })
+    .catch(function () { /* flux indisponible : le bloc reste masqué */ });
+
+  prev.addEventListener("click", function () { step(-1); });
+  next.addEventListener("click", function () { step(1); });
+  track.addEventListener("scroll", updateNav, { passive: true });
+  window.addEventListener("resize", updateNav);
+  root.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest("a");
+    if (a) track_click(a.getAttribute("data-cp-ig") === "post" ? "post" : "follow");
+  });
+})();
+</script>
