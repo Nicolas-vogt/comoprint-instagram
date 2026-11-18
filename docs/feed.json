@@ -1,8 +1,16 @@
 {
-  "updated_at": "2026-11-17T13:26:36+00:00",
+  "updated_at": "2026-11-18T13:02:15+00:00",
   "username": "comoprint",
   "profile_url": "https://www.instagram.com/comoprint/",
   "items": [
+    {
+      "id": "18097156622660086",
+      "type": "VIDEO",
+      "permalink": "https://www.instagram.com/reel/Df2VIB_Nz-Q/",
+      "image": "img/18097156622660086.webp",
+      "caption": "🖤 BLACK FRIDAY : ET SI VOUS DONNIEZ UN NOUVEAU LOOK À VOTRE VITRINE ? 🖤 Les fêtes de fin d’année approchent, c’est le moment de faire…",
+      "timestamp": "2026-11-17T16:12:08+0000"
+    },
     {
       "id": "18146891455588574",
       "type": "VIDEO",
@@ -42,14 +50,6 @@
       "image": "img/17985784800106800.webp",
       "caption": "🎶 Et si chacun pouvait choisir la musique de l’atelier ? On a demandé à chacun sa musique préférée, celle qu’il mettrait à l’atelier s’il…",
       "timestamp": "2026-10-30T15:40:32+0000"
-    },
-    {
-      "id": "18115289846274901",
-      "type": "VIDEO",
-      "permalink": "https://www.instagram.com/reel/DfANoUBNOh2/",
-      "image": "img/18115289846274901.webp",
-      "caption": "📅 C’est l’heure de préparer vos calendriers 2027 ! 🎉 Avec le calendrier publicitaire rigide Comoprint, restez visible auprès de vos…",
-      "timestamp": "2026-10-27T15:47:44+0000"
     }
   ]
 }
