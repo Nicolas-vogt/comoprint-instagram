@@ -1,8 +1,16 @@
 {
-  "updated_at": "2026-11-23T14:38:21+00:00",
+  "updated_at": "2026-11-24T14:52:08+00:00",
   "username": "comoprint",
   "profile_url": "https://www.instagram.com/comoprint/",
   "items": [
+    {
+      "id": "18119986268002425",
+      "type": "VIDEO",
+      "permalink": "https://www.instagram.com/reel/Df7ZkuNtYWf/",
+      "image": "img/18119986268002425.webp",
+      "caption": "✨ NOUVEAUTÉ CHEZ COMOPRINT ! ✨ Découvrez notre ROLL-UP LUMINEUX ! 🤩 Contrairement à un roll-up classique, il intègre un éclairage LED qui…",
+      "timestamp": "2026-11-19T15:27:05+0000"
+    },
     {
       "id": "18097156622660086",
       "type": "VIDEO",
@@ -42,14 +50,6 @@
       "image": "img/18120782477062854.webp",
       "caption": "🚩 Nouveau test chez Comoprint ! Aujourd’hui, on teste une nouvelle matière avec un objectif : pouvoir produire vos drapeaux directement…",
       "timestamp": "2026-11-03T15:10:33+0000"
-    },
-    {
-      "id": "17985784800106800",
-      "type": "VIDEO",
-      "permalink": "https://www.instagram.com/reel/DfH7PCytZBb/",
-      "image": "img/17985784800106800.webp",
-      "caption": "🎶 Et si chacun pouvait choisir la musique de l’atelier ? On a demandé à chacun sa musique préférée, celle qu’il mettrait à l’atelier s’il…",
-      "timestamp": "2026-10-30T15:40:32+0000"
     }
   ]
 }
