@@ -1,8 +1,16 @@
 {
-  "updated_at": "2026-11-26T13:53:38+00:00",
+  "updated_at": "2026-11-27T13:51:41+00:00",
   "username": "comoprint",
   "profile_url": "https://www.instagram.com/comoprint/",
   "items": [
+    {
+      "id": "17997279183058775",
+      "type": "CAROUSEL_ALBUM",
+      "permalink": "https://www.instagram.com/p/DgNa7QBkXcq/",
+      "image": "img/17997279183058775.webp",
+      "caption": "📸 Aujourd’hui, l’équipe Comoprint s’est prise en photo avec des photobooths… et on a visiblement quelques talents cachés devant l’objectif…",
+      "timestamp": "2026-11-26T15:24:43+0000"
+    },
     {
       "id": "17944197585400855",
       "type": "VIDEO",
@@ -42,14 +50,6 @@
       "image": "img/17906113746605514.webp",
       "caption": "🖤 Le BLACK FRIDAY débarque chez Comoprint ! 🖤 🎉 En ce mois de novembre, profitez de -20 % sur TOUT le site Comoprint ! C’est le moment…",
       "timestamp": "2026-11-04T09:58:29+0000"
-    },
-    {
-      "id": "18120782477062854",
-      "type": "CAROUSEL_ALBUM",
-      "permalink": "https://www.instagram.com/p/DfSLBU9jRoQ/",
-      "image": "img/18120782477062854.webp",
-      "caption": "🚩 Nouveau test chez Comoprint ! Aujourd’hui, on teste une nouvelle matière avec un objectif : pouvoir produire vos drapeaux directement…",
-      "timestamp": "2026-11-03T15:10:33+0000"
     }
   ]
 }
